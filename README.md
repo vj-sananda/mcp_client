@@ -41,7 +41,6 @@ uv add mcp python-dotenv google-genai
 
 **2⃣ Clone this repository:**
 ```bash
-git clone https://github.com/your-username/mcp-client-gemini.git
 cd mcp-client-gemini
 ```
 

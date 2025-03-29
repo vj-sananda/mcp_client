@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-client_langchain_google_genai_bind_tools.py
+langchain_mcp_client.py
 
 This file implements an MCP client that:
   - Connects to an MCP server via a stdio connection.
