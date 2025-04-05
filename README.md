@@ -2,212 +2,77 @@
 
 [📢 Subscribe to The AI Language on YouTube!](https://youtube.com/@theailanguage?sub_confirmation=1)
 
+Welcome! This project features multiple MCP clients integrated with **Google Gemini AI** to execute tasks via the **Model Context Protocol (MCP)** — with and without LangChain.
+
 Happy building, and don’t forget to subscribe!  
 
----
 
-**Table of Contents**
-- [✪ Features](#-features)
-- [὎6 Installation](#-installation)
-- [🔑 Setting Up the API Key](#-setting-up-the-api-key)
-- [🚀 Running the MCP Client](#-running-the-mcp-client)
-- [🔧 How It Works](#-how-it-works)
-- [📁 Project Structure](#-project-structure)
-- [🎯 Example](#-example)
-- [🌟 Contributing](#-contributing)
-- [🎮 Tutorial Videos](#-tutorial-videos)
+## MCP Client Options
 
-You now have **three different MCP client implementations** in this repo:
+This repository includes **four MCP client options** for various use cases:
 
-### ➔ Option 1: Legacy Client (with Gemini but without LangChain)
-```bash
-uv run client.py path/to/server.py
-```
+| Option | Client Script | LangChain | Config Support | Transport | Tutorial |
+|--------|-------------------------------|------------|----------------|-----------|----------|
+| 1 | `client.py` | ❌ | ❌ | STDIO | [Legacy Client](https://youtu.be/GAPncIfnDwg) |
+| 2 | `langchain_mcp_client.py` | ✅ | ❌ | STDIO | [LangChain Client](https://youtu.be/hccNm88bk6w) |
+| 3 | `langchain_mcp_client_wconfig.py` | ✅ | ✅ | STDIO | [Multi-Server](https://youtu.be/nCnBWVv2uTA) |
+| 4 | `client_sse.py` | ❌ | ❌ | SSE (Loca & Web) | [SSE Client](https://youtu.be/s0YJNcT1XMA) |
 
-### ➔ Option 2: New LangChain Client (with Gemini + React Agent)
-```bash
-uv run langchain_mcp_client.py path/to/server.py
-```
-
-### ➔ Option 3: New LangChain Client (with Gemini + React Agent, Multi-Server Config)
-```bash
-uv run langchain_mcp_client_wconfig.py path/to/config.json
-```
-
-If you want to add preexisting MCP Servers, please refer to [this repository](https://github.com/modelcontextprotocol/servers).
-
-Watch the multi-server tutorial video 👉 [https://youtu.be/nCnBWVv2uTA](https://youtu.be/nCnBWVv2uTA)
-
-[![Multi-Server Tutorial Video](https://img.youtube.com/vi/nCnBWVv2uTA/maxresdefault.jpg)](https://youtu.be/nCnBWVv2uTA)
+If you want to add or reuse MCP Servers, check out [the MCP Servers repo](https://github.com/modelcontextprotocol/servers).
 
 ---
 
-## ✪ **Features**
-✅ Connects to an MCP server (Python or Node.js)  
-✅ Sends queries to **Google Gemini AI**  
-✅ Lets **Gemini call external tools** from the MCP server  
-✅ Executes MCP tool commands and **returns the results**  
-✅ (in progress) **Maintains conversation history**, so Gemini **remembers past queries**       
+## ✪ Features
+
+✅ Connects to an MCP server (STDIO or SSE)  
+✅ Uses **Google Gemini AI** to interpret user prompts  
+✅ Allows **Gemini to call MCP tools** via server  
+✅ Executes tool commands and returns results  
+✅ (Upcoming) Maintains context and history for conversations  
 
 ---
 
-## 📦 **Installation**
+### Running the MCP Client
 
-**1⃣ Install the required dependencies using `uv` (Universal Virtualenv):**
-```bash
-uv add mcp python-dotenv google-genai
-```
+Choose the appropriate command for your preferred client:
 
-**2⃣ Clone this repository:**
-```bash
-cd mcp-client-gemini
-```
-
-**3⃣ Set up the project and virtual environment:**
-```bash
-uv init mcp-client
-cd mcp-client
-uv venv
-```
-
-**4⃣ Activate the virtual environment:**
-```bash
-# On Windows:
-.venv\Scripts\activate
-
-# On MacOS/Linux:
-source .venv/bin/activate
-```
+Legacy STDIO - uv run client.py path/to/server.py
+LangChain STDIO -	uv run langchain_mcp_client.py path/to/server.py
+LangChain Multi-Server STDIO - uv run langchain_mcp_client_wconfig.py path/to/config.json
+SSE Client - uv run client_sse.py sse_server_url
 
 ---
 
-## 🔑 **Setting Up the API Key**
+### How It Works
 
-To use **Google Gemini AI**, you need an **API key**. Please go to [Google AI Studio](https://aistudio.google.com/prompts/new_chat). Please read their terms and conditions and other policies before obtaining and using the key.
-
-**1⃣ Create a `.env` file:**
-```bash
-touch .env
-```
-
-**2⃣ Add your API key inside `.env`:**
-```
-GEMINI_API_KEY=your_api_key_here
-GOOGLE_API_KEY=your_api_key_here
-```
-
-**3⃣ Make sure `.env` is ignored in Git:**
-```bash
-echo ".env" >> .gitignore
-```
-
-*Note:* If you're using the new LangChain client, you can also name the key `GOOGLE_API_KEY`. The client will automatically load it using `dotenv`.
+You send a prompt:
+Create a file named test.txt
+The prompt is sent to Google Gemini AI
+Gemini uses available MCP tools to determine a response
+The tool is executed on the connected server
+The AI returns results and maintains conversation context (if supported)
 
 ---
 
-## 🚀 **Running the MCP Client**
+### Project Structure
 
-You now have **three different MCP client implementations** in this repo:
-
-### ➔ Option 1: Legacy Client (Without LangChain)
-```bash
-uv run client.py path/to/server.py
-```
-
-### ➔ Option 2: New LangChain Client (with Gemini + React Agent)
-```bash
-uv run langchain_mcp_client.py path/to/server.py
-```
-
-### ➔ Option 3: New LangChain Client (with Gemini + React Agent, Multi-Server Config)
-```bash
-uv run langchain_mcp_client_wconfig.py
-```
-
-Watch the respective tutorial videos:  
-Legacy Client Tutorial 👉 [https://youtu.be/GAPncIfnDwg](https://youtu.be/GAPncIfnDwg)  
-LangChain Client Tutorial 👉 [https://youtu.be/hccNm88bk6w](https://youtu.be/hccNm88bk6w)  
-Multi-Server LangChain Client Tutorial 👉 [https://youtu.be/nCnBWVv2uTA](https://youtu.be/nCnBWVv2uTA)
-
----
-
-## 🔧 **How It Works**
-
-1⃣ You enter a query like:  
-`Create a file named test.txt`
-
-2⃣ The MCP client sends this to **Google Gemini AI**
-
-3⃣ Gemini sees available MCP tools and calls the correct one (e.g. `run_command`)
-
-4⃣ The MCP client executes the command via the server and returns the result
-
-5⃣ Gemini responds with context-aware output and remembers previous interactions
-
----
-
-## 📁 **Project Structure**
-```
 mcp-client-gemini/
-│— client.py                        # Legacy MCP Client (without LangChain)
-│— langchain_mcp_client.py          # New MCP Client using LangChain & Gemini
-│— langchain_mcp_client_wconfig.py  # New LangChain Client with multi-server configuration support
-│— .env                             # Stores your Google Gemini API key
-│— README.md                        # This documentation
-│— requirements.txt                 # Optional dependency list
-│— .gitignore                       # To ignore .env and other files
-│— LICENSE                          # License file
-```
+│— client.py                       # Basic client (STDIO)
+│— langchain_mcp_client.py         # LangChain + Gemini
+│— langchain_mcp_client_wconfig.py # LangChain + config.json (multi-server)
+│— client_sse.py                   # SSE transport client (local or remote)
+│— .env                            # API key environment file
+│— README.md                       # Project documentation
+│— requirements.txt                # Dependency list
+│— .gitignore                      # Git ignore rules
+│— LICENSE                         # License information
 
 ---
 
-## 🎯 **Example**
+### Contributing
 
-Run with a terminal server:
-```bash
-uv run langchain_mcp_client.py ../../servers/terminal_server/terminal_server.py
-```
-
-Query:
-```
-create file notes.txt and write hello inside
-```
-
-Output:
-```json
-{
-  "messages": [
-    {
-      "type": "HumanMessage",
-      "content": "create file notes.txt and write hello inside"
-    },
-    {
-      "type": "AIMessage",
-      "content": "Sure! I will create notes.txt and add 'hello' inside it."
-    }
-  ]
-}
-```
-
----
-
-## 🌟 **Contributing**
-
-If you'd like to add more client versions to help people learn the same concepts, please consider contributing!  
-✅ Submit bug fixes or ideas  
-✅ Help improve documentation
-
-Just fork this repo and submit a pull request.
-
----
-
-## 🎮 **Tutorial Videos**
-
-🎥 Legacy MCP Client Tutorial  
-👉 [https://youtu.be/GAPncIfnDwg](https://youtu.be/GAPncIfnDwg)
-
-🎥 LangChain + Gemini MCP Client Tutorial  
-👉 [https://youtu.be/hccNm88bk6w](https://youtu.be/hccNm88bk6w)
-
-🎥 Multi-Server LangChain Client Tutorial  
-👉 [https://youtu.be/nCnBWVv2uTA](https://youtu.be/nCnBWVv2uTA)
+Want to help others learn MCP + Gemini?
+✅ Add new client implementations
+✅ Report bugs or request features
+✅ Improve this documentation
+Just fork the repo and submit a pull request!
