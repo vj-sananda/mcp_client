@@ -36,43 +36,42 @@ If you want to add or reuse MCP Servers, check out [the MCP Servers repo](https:
 
 Choose the appropriate command for your preferred client:
 
-Legacy STDIO - uv run client.py path/to/server.py
-LangChain STDIO -	uv run langchain_mcp_client.py path/to/server.py
-LangChain Multi-Server STDIO - uv run langchain_mcp_client_wconfig.py path/to/config.json
-SSE Client - uv run client_sse.py sse_server_url
-
----
-
-### How It Works
-
-You send a prompt:
-Create a file named test.txt
-The prompt is sent to Google Gemini AI
-Gemini uses available MCP tools to determine a response
-The tool is executed on the connected server
-The AI returns results and maintains conversation context (if supported)
-
----
+- **Legacy STDIO** — `uv run client.py path/to/server.py`
+- **LangChain STDIO** — `uv run langchain_mcp_client.py path/to/server.py`
+- **LangChain Multi-Server STDIO** — `uv run langchain_mcp_client_wconfig.py path/to/config.json`
+- **SSE Client** — `uv run client_sse.py sse_server_url`
 
 ### Project Structure
 
+```
 mcp-client-gemini/
-│— client.py                       # Basic client (STDIO)
-│— langchain_mcp_client.py         # LangChain + Gemini
-│— langchain_mcp_client_wconfig.py # LangChain + config.json (multi-server)
-│— client_sse.py                   # SSE transport client (local or remote)
-│— .env                            # API key environment file
-│— README.md                       # Project documentation
-│— requirements.txt                # Dependency list
-│— .gitignore                      # Git ignore rules
-│— LICENSE                         # License information
+├── client.py                        # Basic client (STDIO)
+├── langchain_mcp_client.py         # LangChain + Gemini
+├── langchain_mcp_client_wconfig.py # LangChain + config.json (multi-server)
+├── client_sse.py                   # SSE transport client (local or remote)
+├── .env                            # API key environment file
+├── README.md                       # Project documentation
+├── requirements.txt                # Dependency list
+├── .gitignore                      # Git ignore rules
+├── LICENSE                         # License information
+```
 
----
+### How It Works
+
+1. You send a prompt:
+   > Create a file named test.txt
+2. The prompt is sent to **Google Gemini AI**.
+3. Gemini uses available **MCP tools** to determine a response.
+4. The selected tool is executed on the **connected server**.
+5. The AI returns results and maintains **conversation context** (if supported).
 
 ### Contributing
 
 Want to help others learn MCP + Gemini?
-✅ Add new client implementations
-✅ Report bugs or request features
-✅ Improve this documentation
-Just fork the repo and submit a pull request!
+
+✅ Add new client implementations  
+✅ Report bugs or request features  
+✅ Improve this documentation  
+
+Just **fork the repo** and submit a **pull request**!
+
